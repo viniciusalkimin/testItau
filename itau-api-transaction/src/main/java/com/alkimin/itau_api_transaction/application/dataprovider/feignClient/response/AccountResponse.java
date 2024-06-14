@@ -1,4 +1,4 @@
-package com.alkimin.itau_api_transaction.application.dataprovider.feignClient.dto;
+package com.alkimin.itau_api_transaction.application.dataprovider.feignClient.response;
 
 import java.math.BigDecimal;
 

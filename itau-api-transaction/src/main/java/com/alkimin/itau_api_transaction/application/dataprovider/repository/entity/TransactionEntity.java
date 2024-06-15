@@ -1,5 +1,6 @@
 package com.alkimin.itau_api_transaction.application.dataprovider.repository.entity;
 
+import com.alkimin.itau_api_transaction.core.domain.Transaction;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,4 +25,12 @@ public class TransactionEntity {
     private String idContaOrigem;
     private String idContaDestino;
     private LocalDateTime transactionTimeStamp;
+
+    public TransactionEntity(Transaction transaction) {
+        this.idCliente = transaction.getIdCliente();
+        this.valor = transaction.getValor();
+        this.idContaOrigem = transaction.getIdContaOrigem();
+        this.idContaDestino = transaction.getIdContaDestino();
+        this.transactionTimeStamp = transaction.getTransactionTimeStamp();
+    }
 }

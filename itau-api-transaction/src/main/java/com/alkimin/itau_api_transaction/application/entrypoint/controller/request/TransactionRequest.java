@@ -1,4 +1,4 @@
-package com.alkimin.itau_api_transaction.application.entrypoint.dto;
+package com.alkimin.itau_api_transaction.application.entrypoint.controller.request;
 
 import java.math.BigDecimal;
 

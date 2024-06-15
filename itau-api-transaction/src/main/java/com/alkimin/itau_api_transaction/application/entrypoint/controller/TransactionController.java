@@ -1,7 +1,9 @@
 package com.alkimin.itau_api_transaction.application.entrypoint.controller;
 
-import com.alkimin.itau_api_transaction.application.entrypoint.dto.TransactionRequest;
+import com.alkimin.itau_api_transaction.application.entrypoint.controller.request.TransactionRequest;
+import com.alkimin.itau_api_transaction.application.entrypoint.controller.response.TransactionResponse;
 import com.alkimin.itau_api_transaction.application.service.TransactionValidatorService;
+import com.alkimin.itau_api_transaction.core.usecase.TransactionUseCase;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,13 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("transferencia")
 public class TransactionController {
 
-    //private SendTransactionUseCase sendTransactionUseCase;
+    private TransactionUseCase transactionUseCase;
 
     private TransactionValidatorService transactionValidatorService;
 
     @PostMapping
-    public ResponseEntity<?> sendTransaction(@RequestBody TransactionRequest transactionRequest){
-        transactionValidatorService.valid(transactionRequest);
-        return ResponseEntity.ok(/*sendTransactionUseCase.execute(transactionRequest)*/).build();
+    public ResponseEntity<TransactionResponse> sendTransaction(@RequestBody TransactionRequest transactionRequest){
+        transactionValidatorService.validate(transactionRequest);
+        var transacationId = transactionUseCase.execute(transactionRequest);
+        return ResponseEntity.ok().body(new TransactionResponse(transacationId));
     }
 }

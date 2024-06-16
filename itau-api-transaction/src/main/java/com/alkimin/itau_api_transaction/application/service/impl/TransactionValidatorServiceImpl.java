@@ -34,6 +34,7 @@ public class TransactionValidatorServiceImpl implements TransactionValidatorServ
         try{
             apiFeignClient.getUser(idCliente);
         } catch (Exception exception) {
+            log.error("Status = error, TransactionValidatorService.validateCostumer() throw ClienteNaoEncontradoException.");
             throw new ClienteNaoEncontradoException(new StringBuilder("Não encontramos nenhum usuário com o Id: " + idCliente).toString());
         }
         log.info("Status = fim, TransactionValidatorService.validateCostumer().");
@@ -44,9 +45,11 @@ public class TransactionValidatorServiceImpl implements TransactionValidatorServ
         try {
             receiverAccount = apiFeignClient.getAccount(idContaDestino).getBody();
         }catch (Exception exception) {
+            log.error("Status = error, TransactionValidatorService.validateAccountReceiver() throw ContaDestinoNaoEncontradaException.");
             throw new ContaDestinoNaoEncontradaException(new StringBuilder("Não encontramos a conta destino com o id: " + idContaDestino).toString());
         }
         if(!receiverAccount.ativo()){
+            log.error("Status = error, TransactionValidatorService.validateAccountReceiver() throw ContaDestinoDesativadaException.");
             throw new ContaDestinoDesativadaException(new StringBuilder("A conta destino está desativada, id: " + idContaDestino).toString());
         }
         log.info("Status = fim, TransactionValidatorService.validateAccountReceiver().");
@@ -57,12 +60,15 @@ public class TransactionValidatorServiceImpl implements TransactionValidatorServ
         try {
             payerAccount = apiFeignClient.getAccount(idContaOrigem).getBody();
         }catch (Exception exception) {
+            log.error("Status = error, TransactionValidatorService.validateAccountPayer() throw ContaOrigemNaoEncontradaException.");
             throw new ContaOrigemNaoEncontradaException(new StringBuilder("Não encontramos a conta origem com o id: " + idContaOrigem).toString());
         }
         if(payerAccount.saldo().compareTo(valor) < 0) {
+            log.error("Status = error, TransactionValidatorService.validateAccountPayer() throw SaldoInsuficienteException.");
             throw new SaldoInsuficienteException("O saldo da conta é inferior ao valor da transação.");
         }
         if(payerAccount.limiteDiario().compareTo(valor) < 0) {
+            log.error("Status = error, TransactionValidatorService.validateAccountPayer() throw LimiteDiarioException.");
             throw new LimiteDiarioException("O limite diário da conta é inferior ao valor da transação.");
         }
         log.info("Status = fim, TransactionValidatorService.validateAccountPayer().");

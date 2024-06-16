@@ -19,19 +19,19 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(ClienteNaoEncontradoException.class)
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public ResponseEntity<ErrorResponse> clienteNotFoundException(){
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("Cliente não encontrado","Não encontramos nenhum cliente em nossa base com o ID informado."));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("Cliente não encontrado.","Não encontramos nenhum cliente em nossa base com o ID informado."));
     }
 
     @ExceptionHandler(ContaDestinoNaoEncontradaException.class)
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public ResponseEntity<ErrorResponse> contaDestinoNotFoundException(){
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("Conta Destino não enontrada","Não encontramos em nossa base a conta destino com o ID informado."));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("Conta Destino não encontrada.","Não encontramos em nossa base a conta destino com o ID informado."));
     }
 
     @ExceptionHandler(ContaOrigemNaoEncontradaException.class)
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public ResponseEntity<ErrorResponse> contaOrigemNotFoundException(){
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("Conta Origem não enontrada","Não encontramos em nossa base a conta origem com o ID informado."));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("Conta Origem não encontrada.","Não encontramos em nossa base a conta origem com o ID informado."));
     }
 
     @ExceptionHandler(LimiteDiarioException.class)

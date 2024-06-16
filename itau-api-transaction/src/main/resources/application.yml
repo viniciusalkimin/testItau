@@ -26,3 +26,18 @@ springdoc:
     api-docs:
         path: "/transferencia/v3/api-docs"
 
+resilience4j:
+    retry:
+        instances:
+            apiRetry:
+                max-attempts: 3
+                wait-duration: 2000ms
+    fallback:
+        apiRetry:
+            fallback-method: fallback
+    ratelimiter:
+        instances:
+            myRateLimiter:
+                limit-for-period: 10
+                limit-refresh-period: 1s
+                timeout-duration: 0

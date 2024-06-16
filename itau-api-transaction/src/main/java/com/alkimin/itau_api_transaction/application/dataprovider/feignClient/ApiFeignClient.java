@@ -1,6 +1,5 @@
 package com.alkimin.itau_api_transaction.application.dataprovider.feignClient;
 
-import com.alkimin.itau_api_transaction.application.config.ResilienceConfig;
 import com.alkimin.itau_api_transaction.application.dataprovider.feignClient.request.TransactionNotifyRequest;
 import com.alkimin.itau_api_transaction.application.dataprovider.feignClient.response.AccountResponse;
 import com.alkimin.itau_api_transaction.application.dataprovider.feignClient.response.UserResponse;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Component
-@FeignClient(value = "validCall", url = "http://localhost:9090", configuration = ResilienceConfig.class)
+@FeignClient(value = "externalAPICall", url = "http://localhost:9090")
 public interface ApiFeignClient {
     @RequestMapping(method = RequestMethod.GET, value = "/clientes/{userId}", produces = "application/json")
     ResponseEntity<UserResponse> getUser(@PathVariable String userId);

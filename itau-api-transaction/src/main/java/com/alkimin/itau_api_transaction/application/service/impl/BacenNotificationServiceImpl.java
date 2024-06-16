@@ -23,8 +23,12 @@ public class BacenNotificationServiceImpl implements BacenNotificationService {
         var transactionNotify = new TransactionNotifyRequest(transaction.getValor(), account);
         try {
             apiFeignClient.notify(transactionNotify);
-        } catch (HttpClientErrorException.TooManyRequests exception){
-            throw new RateLimitExceededException("Rate limit excedido.");
         }
+        catch (HttpClientErrorException.TooManyRequests exception){
+            throw new RateLimitExceededException("Falha na comunicação com Bacen.");
+        }
+    }
+    public void fallback(Throwable t) {
+        throw new RateLimitExceededException("Erro ao se comunicar com Bacen: " + t.getMessage());
     }
 }

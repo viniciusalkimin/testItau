@@ -4,6 +4,7 @@ import com.alkimin.itau_api_transaction.application.entrypoint.controller.reques
 import com.alkimin.itau_api_transaction.application.entrypoint.controller.response.TransactionResponse;
 import com.alkimin.itau_api_transaction.application.service.TransactionValidatorService;
 import com.alkimin.itau_api_transaction.core.usecase.TransactionUseCase;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 @RequestMapping("transferencia")
+@RateLimiter(name = "myRateLimiter")
 public class TransactionController {
 
     private TransactionUseCase transactionUseCase;

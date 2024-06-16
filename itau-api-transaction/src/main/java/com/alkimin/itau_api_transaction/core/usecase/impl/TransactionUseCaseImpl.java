@@ -8,11 +8,13 @@ import com.alkimin.itau_api_transaction.core.domain.Transaction;
 import com.alkimin.itau_api_transaction.core.usecase.TransactionUseCase;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
 @Service
+@Slf4j
 @AllArgsConstructor
 public class TransactionUseCaseImpl implements TransactionUseCase {
 
@@ -23,6 +25,7 @@ public class TransactionUseCaseImpl implements TransactionUseCase {
     @Override
     @Transactional
     public String execute(TransactionRequest transactionRequest) {
+        log.info("Status = início, TransactionUseCase.execute().");
 
         var transaction = Transaction.builder().valor(transactionRequest.valor())
                 .idCliente(transactionRequest.idCliente()).idContaOrigem(transactionRequest.conta().idOrigem())
@@ -30,6 +33,8 @@ public class TransactionUseCaseImpl implements TransactionUseCase {
 
         var transactionEntity = transactionRepository.save(new TransactionEntity(transaction));
         bacenNotificationService.notifyTransaction(transactionEntity);
+        log.info("Status = fim, TransactionUseCase.execute().");
+
         return transactionEntity.getIdTransaction().toString();
     }
 }

@@ -25,3 +25,6 @@ $ cd testItau
 # Suba o container com as Apis Mocks
 $ docker compose up -d
 ````
+
+## Proposta Arquitetural
+![ArquiteturaItau.PNG](itau-api-transaction%2FArquiteturaItau.PNG)
